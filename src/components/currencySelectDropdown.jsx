@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,25 +6,10 @@ import Select from "@mui/material/Select";
 
 const countryList = require("../assets/countries.json");
 
-const getCurrencyData = function () {
-  if (process.env.REACT_APP_ENV === "production") {
-    axios
-      .get(process.env.REACT_APP_CURRENCY_END_POINT, {
-        params: {
-          apikey: process.env.REACT_APP_CURRENCY_API_TOKEN,
-        },
-      })
-      .then((response) => {
-        return response.data;
-      });
-  } else return require("../assets/currencyResponse.json");
-};
-
 export default function CurrencyDropdown(props) {
   const [currency, setCurrency] = useState(props.initial);
 
-  const countryCodes = [...Object.keys(getCurrencyData().data)].concat("USD");
-  const filteredCountries = countryCodes
+  const filteredCountries = props.countryCodes
     .map(
       (code) =>
         countryList.filter((country) => country.currency.code === code)[0]
@@ -48,7 +32,6 @@ export default function CurrencyDropdown(props) {
   };
 
   return {
-    //TODO Return Symbol as well or perhaps whole object
     currency,
     render: (
       <div>
