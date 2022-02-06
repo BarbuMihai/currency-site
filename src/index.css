@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  background-color: rgb(245, 245, 245);
-  padding: 20px;
+@font-face {
+  font-family: Larsseit;
+  src: url(./assets/fonts/Larsseit.otf);
 }
+
+@import "./assets/style/_exchange.css";

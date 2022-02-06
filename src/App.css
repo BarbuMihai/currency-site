@@ -1,10 +1,32 @@
+* {
+  will-change: transform, box-shadow, z-index;
+
+  color: #191c1f;
+}
 html {
-  background-color: #d0d0d0;
+  background-color: #f3f5f7;
+  padding: 20px;
+  font-size: 14px !important;
+  font-family: Larsseit !important;
+  font-style: normal;
+}
+
+span {
+  color: #c6cacf;
 }
 
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-  padding: 10px 15px !important;
+  padding: 12px 15px !important;
 }
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-  padding: 10px 15px !important;
+  padding: 12px 15px !important;
+}
+
+.css-17qo04m-MuiInputBase-root-MuiOutlinedInput-root {
+  background-color: #f3f5f7;
+}
+
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+  border-radius: 10px !important;
+  background-color: #f3f5f7;
 }

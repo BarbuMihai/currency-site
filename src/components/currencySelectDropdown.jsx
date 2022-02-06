@@ -10,9 +10,8 @@ export default function CurrencyDropdown(props) {
   const [currency, setCurrency] = useState(props.initial);
 
   const filteredCountries = props.countryCodes
-    .map(
-      (code) =>
-        countryList.filter((country) => country.currency.code === code)[0]
+    .map((code) =>
+      countryList.find((country) => country.currency.code === code)
     )
     .filter((valid) => valid !== undefined);
 
@@ -23,10 +22,7 @@ export default function CurrencyDropdown(props) {
   const MenuProps = {
     PaperProps: {
       style: {
-        margin: 5,
-        maxWidth: 300,
         maxHeight: 300,
-        padding: 0,
       },
     },
   };
@@ -35,20 +31,16 @@ export default function CurrencyDropdown(props) {
     currency,
     render: (
       <div>
-        <Box className="m-2" sx={{ minWidth: 300 }}>
-          <FormControl fullWidth>
+        <Box>
+          <FormControl>
             <Select
-              sx={{
-                marginBottom: 2,
-                maxWidth: 300,
-                borderColor: "red",
-              }}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               displayEmpty
               value={currency}
               onChange={handleChange}
               MenuProps={MenuProps}
+              sx={{ borderRadius: "10px", width: "240px" }}
             >
               {filteredCountries.map((country) => (
                 <MenuItem value={country.currency.code} key={country.name}>
@@ -58,7 +50,9 @@ export default function CurrencyDropdown(props) {
                       src={"data:image/png;base64," + country.flag}
                       alt={country.name}
                     />
-                    {country.currency.code} - {country.name}
+                    <div className="mr-4">
+                      {country.currency.code} - {country.currency.name}
+                    </div>
                   </div>
                 </MenuItem>
               ))}
