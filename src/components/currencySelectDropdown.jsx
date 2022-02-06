@@ -7,8 +7,10 @@ import Select from "@mui/material/Select";
 const countryList = require("../assets/countries.json");
 
 export default function CurrencyDropdown(props) {
-  const [currency, setCurrency] = useState(props.initial);
-
+  const [currency, setCurrency] = useState(
+    countryList.find((country) => country.currency.code === props.initial)
+      .currency
+  );
   const filteredCountries = props.countryCodes
     .map((code) =>
       countryList.find((country) => country.currency.code === code)
@@ -30,7 +32,7 @@ export default function CurrencyDropdown(props) {
   return {
     currency,
     render: (
-      <div>
+      <>
         <Box>
           <FormControl>
             <Select
@@ -43,7 +45,7 @@ export default function CurrencyDropdown(props) {
               sx={{ borderRadius: "10px", width: "240px" }}
             >
               {filteredCountries.map((country) => (
-                <MenuItem value={country.currency.code} key={country.name}>
+                <MenuItem value={country.currency} key={country.name}>
                   <div className="flex items-center">
                     <img
                       className="mr-2 rounded-md border-solid border-2 border-gray-200"
@@ -59,7 +61,7 @@ export default function CurrencyDropdown(props) {
             </Select>
           </FormControl>
         </Box>
-      </div>
+      </>
     ),
   };
 }

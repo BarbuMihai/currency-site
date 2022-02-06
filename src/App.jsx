@@ -1,5 +1,6 @@
 import "./App.css";
 import ExchangeContainer from "./components/exchangeContainer";
+import ExchangeTable from "./components/exchangeTable";
 
 // No Country
 // CUC
@@ -19,6 +20,7 @@ function App() {
   return (
     <div className="App">
       <ExchangeContainer />
+      <ExchangeTable></ExchangeTable>
     </div>
   );
 }

@@ -5,10 +5,11 @@ import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { Collapse } from "@mui/material";
-import { CardContent } from "@mui/material";
+import { CardContent, Box } from "@mui/material";
 import ExchangeIcon from "./exchangeIcon";
 import { Typography } from "@mui/material";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import InputAdornment from "@mui/material/InputAdornment";
 
 const getCurrencyData = function () {
   if (process.env.REACT_APP_ENV === "production") {
@@ -38,11 +39,11 @@ export default function ExchangeContainer() {
   const currencyCalculator = () => {
     const calculatedValue = isExchangeInversed
       ? amount *
-        (currencyData[renderToComponent.currency] /
-          currencyData[renderFromComponent.currency])
+        (currencyData[renderToComponent.currency.code] /
+          currencyData[renderFromComponent.currency.code])
       : amount *
-        (currencyData[renderFromComponent.currency] /
-          currencyData[renderToComponent.currency]);
+        (currencyData[renderFromComponent.currency.code] /
+          currencyData[renderToComponent.currency.code]);
 
     setComputedExchange(calculatedValue.toFixed(8));
   };
@@ -59,7 +60,7 @@ export default function ExchangeContainer() {
   }, [computedExchange]);
 
   const handleChange = (event) => {
-    setAmount(event.target.value);
+    event.target.value > 0 ? setAmount(event.target.value) : setAmount(0);
   };
 
   const renderFromComponent = CurrencyDropdown({
@@ -73,22 +74,36 @@ export default function ExchangeContainer() {
 
   return (
     <>
-      <Card sx={{ borderRadius: "20px", maxWidth: 930 }} className="mx-auto">
+      <Card
+        sx={{ borderRadius: "20px", maxWidth: 930 }}
+        className="mx-auto my-3"
+      >
         <div className="flex py-1 justify-center items-end mb-5">
           <div className="ml-2">
             <div className="field-title">Amount</div>
-            <TextField
-              sx={{
-                maxWidth: "196px",
-                marginRight: "10px",
-              }}
-              type="number"
-              error={amount.length ? false : true}
-              id="outlined-basic"
-              variant="outlined"
-              value={amount}
-              onChange={handleChange}
-            />
+            <Box sx={{ borderRadius: 10 }}>
+              <TextField
+                sx={{
+                  maxWidth: "196px",
+                  marginRight: "10px",
+                }}
+                type="number"
+                error={amount.length ? false : true}
+                id="outlined-basic"
+                variant="outlined"
+                value={amount}
+                onChange={handleChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      {isExchangeInversed
+                        ? renderFromComponent.currency.symbol
+                        : renderToComponent.currency.symbol}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
           </div>
           <div>
             <div className="ml-2">
@@ -154,8 +169,8 @@ export default function ExchangeContainer() {
                 <Typography fontSize={17} fontWeight={700}>
                   {displayAmount}{" "}
                   {isExchangeInversed
-                    ? renderFromComponent.currency
-                    : renderToComponent.currency}{" "}
+                    ? renderFromComponent.currency.code
+                    : renderToComponent.currency.code}{" "}
                   =
                 </Typography>
               </div>
@@ -164,8 +179,8 @@ export default function ExchangeContainer() {
                   {displayComputed.blackText}
                   <span>{displayComputed.greyText}</span>
                   {isExchangeInversed
-                    ? renderToComponent.currency
-                    : renderFromComponent.currency}
+                    ? renderToComponent.currency.code
+                    : renderFromComponent.currency.code}
                 </Typography>
                 <div className="mr-4">
                   <button onClick={() => setExpandState(false)}>
@@ -178,12 +193,12 @@ export default function ExchangeContainer() {
               <div>
                 {displayAmount}{" "}
                 {isExchangeInversed
-                  ? renderFromComponent.currency
-                  : renderToComponent.currency}{" "}
+                  ? renderFromComponent.currency.code
+                  : renderToComponent.currency.code}{" "}
                 = {computedExchange.split(".")[0]}{" "}
                 {isExchangeInversed
-                  ? renderToComponent.currency
-                  : renderFromComponent.currency}
+                  ? renderToComponent.currency.code
+                  : renderFromComponent.currency.code}
               </div>
               <div className="mr-2">
                 Last Updated{" "}

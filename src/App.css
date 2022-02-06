@@ -1,6 +1,4 @@
 * {
-  will-change: transform, box-shadow, z-index;
-
   color: #191c1f;
 }
 html {
@@ -26,7 +24,15 @@ span {
   background-color: #f3f5f7;
 }
 
-.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+.MuiTextField-root {
+}
+
+.MuiOutlinedInput-root {
   border-radius: 10px !important;
   background-color: #f3f5f7;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-style: none;
+  border-width: 0 !important;
 }
